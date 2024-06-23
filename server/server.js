@@ -38,3 +38,5 @@ mongoose.connect(CONNECTION_URL)
 app.get('/', (req, res) => {
     res.send('Welcome to the Chat API');
 });
+
+mongoose.set('strictQuery', true);

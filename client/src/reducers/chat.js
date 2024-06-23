@@ -1,9 +1,9 @@
-const chatReducer = (state = { messages: [] }, action) => {
+const chatReducer = (state = { chats: [] }, action) => {
   switch (action.type) {
-    case 'FETCH_MESSAGES':
-      return { ...state, messages: action.payload };
-    case 'NEW_MESSAGE':
-      return { ...state, messages: [...state.messages, action.payload] };
+    case 'FETCH_CHATS':
+      return { ...state, chats: action.payload };
+    case 'CREATE_CHAT':
+      return { ...state, chats: [...state.chats, action.payload] };
     default:
       return state;
   }

@@ -1,31 +1,43 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMessages } from '../actions/chat';
-import ChatInput from './ChatInput';
+import { fetchChats, createChat } from '../actions/chat';
 
 const ChatWindow = () => {
+  const [message, setMessage] = useState('');
   const dispatch = useDispatch();
-  const messages = useSelector((state) => state.chat.messages);
-  const chatEndRef = useRef(null);
+  const chats = useSelector((state) => state.chat.chats);
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
-    dispatch(fetchMessages());
+    dispatch(fetchChats());
   }, [dispatch]);
 
-  useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (message.trim()) {
+      dispatch(createChat(message));
+      setMessage('');
+    }
+  };
 
   return (
     <div>
-      <h1>Chat Room</h1>
-      <div className="chat-history" style={{ height: '300px', overflowY: 'scroll' }}>
-        {messages.map((msg, index) => (
-          <p key={index}>{msg.text}</p>
+      <h2>Welcome, {user?.email}</h2>
+      <div className="chat-history">
+        {chats.map((chat, index) => (
+          <div key={index}>{chat.message}</div>
         ))}
-        <div ref={chatEndRef} />
       </div>
-      <ChatInput />
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Type a message..."
+          required
+        />
+        <button type="submit">Send</button>
+      </form>
     </div>
   );
 };
