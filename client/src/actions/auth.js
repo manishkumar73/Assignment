@@ -16,15 +16,17 @@ export const login = (formData) => async (dispatch) => {
   }
 };
 
+// actions/auth.js
 export const signup = (formData) => async (dispatch) => {
   try {
     const { data } = await API.post('/user/signup', formData);
-    localStorage.setItem('token', data.token); // Save token to localStorage
+    localStorage.setItem('token', data.token);
     dispatch({ type: 'AUTH', data });
   } catch (error) {
     console.error(error);
   }
 };
+
 
 export const resetPassword = (email) => async (dispatch) => {
   try {
