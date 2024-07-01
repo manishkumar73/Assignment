@@ -6,7 +6,7 @@ import { login, signup } from '../actions/auth';
 
 const Auth = () => {
     const [isSignup, setIsSignup] = useState(false);
-    const [formData, setFormData] = useState({ email: '', password: '', confirmPassword: '' });
+    const [formData, setFormData] = useState({ email: '', password: ''});
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
